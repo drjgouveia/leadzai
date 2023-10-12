@@ -50,15 +50,24 @@ def generate_pagination(
     return numbers
 
 
-def pagination_to_string(pagination: int, boundaries: int) -> str:
+def pagination_to_string(
+    pagination: int, current_page: int, total_pages: int, boundaries: int, around: int
+) -> str:
     string = ""
     prev = 0
-    for i, p in enumerate(pagination):
+    for i, p in enumerate(
+        pagination,
+    ):
         if (p - prev) > 1 and i < len(pagination):
             string += "... "
         prev = p
         string += str(p) + " "
-        if boundaries == 0 and i == len(pagination) - 1:
+        if (
+            boundaries == 0
+            and i == len(pagination) - 1
+            and total_pages != current_page
+            and p != total_pages
+        ):
             string += "..."
 
     return string.strip()
