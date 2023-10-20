@@ -20,5 +20,12 @@ if __name__ == "__main__":
             print("Invalid input")
 
     print(
-        pagination_to_string(generate_pagination(**data), **data),
+        pagination_to_string(
+            generate_pagination(**data),
+            **{
+                "current_page": data["current_page"],
+                "total_pages": data["total_pages"],
+                "boundaries": data["boundaries"],
+            },
+        ),
     )
