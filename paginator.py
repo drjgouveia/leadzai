@@ -46,6 +46,18 @@ def generate_pagination(
     """
     Generate a list of numbers that will be used as pagination
     """
+    if current_page > total_pages:
+        current_page = total_pages
+
+    if current_page < 0:
+        current_page = 1
+
+    if boundaries < 0:
+        boundaries = 0
+
+    if around < 0:
+        around = 0
+
     numbers = generate_boundaries(total_pages, boundaries)
     numbers += generate_around(current_page, around, total_pages)
     numbers = sorted(set(numbers))
@@ -61,6 +73,16 @@ def pagination_to_string(
 ) -> str:
     pagination_string = ""
     previous_page = 0
+
+    if boundaries < 0:
+        boundaries = 0
+
+    if current_page > total_pages:
+        current_page = total_pages
+
+    if current_page < 0:
+        current_page = 1
+
     for i, page in enumerate(
         pagination,
     ):
