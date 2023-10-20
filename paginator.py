@@ -1,3 +1,6 @@
+from typing import List
+
+
 def generate_boundaries(total_pages: int, boundaries: int) -> list:
     """
     Generate a list of numbers that will be used as boundaries
@@ -39,7 +42,7 @@ def generate_around(current_page: int, around: int, total_pages: int) -> list:
 
 def generate_pagination(
     current_page: int, total_pages: int, boundaries: int, around: int
-) -> list:
+) -> List[int]:
     """
     Generate a list of numbers that will be used as pagination
     """
@@ -51,23 +54,26 @@ def generate_pagination(
 
 
 def pagination_to_string(
-    pagination: int, current_page: int, total_pages: int, boundaries: int, around: int
+    pagination: List[int],
+    current_page: int,
+    total_pages: int,
+    boundaries: int,
 ) -> str:
-    string = ""
-    prev = 0
-    for i, p in enumerate(
+    pagination_string = ""
+    previous_page = 0
+    for i, page in enumerate(
         pagination,
     ):
-        if (p - prev) > 1 and i < len(pagination):
-            string += "... "
-        prev = p
-        string += str(p) + " "
+        if (page - previous_page) > 1 and i < len(pagination):
+            pagination_string += "... "
+        previous_page = page
+        pagination_string += str(page) + " "
         if (
             boundaries == 0
             and i == len(pagination) - 1
             and total_pages != current_page
-            and p != total_pages
+            and page != total_pages
         ):
-            string += "..."
+            pagination_string += "..."
 
-    return string.strip()
+    return pagination_string.strip()
